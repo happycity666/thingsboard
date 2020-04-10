@@ -13,25 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-tb-timeseries-table-widget {
-  table.md-table thead.md-head > tr.md-row {
-    height: 40px;
-  }
+package org.thingsboard.server.dao.util;
 
-  table.md-table tbody.md-body > tr.md-row,
-  table.md-table tfoot.md-foot > tr.md-row {
-    height: 38px;
-  }
+import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 
-  .md-table-pagination > * {
-    height: 46px;
-  }
-
-  .tb-data-table md-toolbar {
-    z-index: 10;
-  }
-
-  md-tabs:not(.md-no-tab-content):not(.md-dynamic-height) {
-    min-height: 0;
-  }
-}
+@ConditionalOnExpression("'${database.ts.type}'=='sql' && '${spring.jpa.database-platform}'=='org.hibernate.dialect.PostgreSQLDialect'")
+public @interface PsqlTsDao { }
