@@ -118,9 +118,7 @@ public class AlarmController extends BaseController {
         try {
             AlarmId alarmId = new AlarmId(toUUID(strAlarmId));
             Alarm alarm = checkAlarmId(alarmId, Operation.WRITE);
-            long ackTs = System.currentTimeMillis();
-            alarmService.ackAlarm(getCurrentUser().getTenantId(), alarmId, ackTs).get();
-            alarm.setAckTs(ackTs);
+            alarmService.ackAlarm(getCurrentUser().getTenantId(), alarmId, System.currentTimeMillis()).get();
             logEntityAction(alarmId, alarm, getCurrentUser().getCustomerId(), ActionType.ALARM_ACK, null);
         } catch (Exception e) {
             throw handleException(e);
@@ -135,9 +133,7 @@ public class AlarmController extends BaseController {
         try {
             AlarmId alarmId = new AlarmId(toUUID(strAlarmId));
             Alarm alarm = checkAlarmId(alarmId, Operation.WRITE);
-            long clearTs = System.currentTimeMillis();
-            alarmService.clearAlarm(getCurrentUser().getTenantId(), alarmId, null, clearTs).get();
-            alarm.setClearTs(clearTs);
+            alarmService.clearAlarm(getCurrentUser().getTenantId(), alarmId, null, System.currentTimeMillis()).get();
             logEntityAction(alarmId, alarm, getCurrentUser().getCustomerId(), ActionType.ALARM_CLEAR, null);
         } catch (Exception e) {
             throw handleException(e);

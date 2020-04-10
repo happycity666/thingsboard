@@ -407,12 +407,8 @@ final class MqttClientImpl implements MqttClient {
     }
 
     private MqttMessageIdVariableHeader getNewMessageId() {
-        int messageId;
-        synchronized (this.nextMessageId) {
-            this.nextMessageId.compareAndSet(0xffff, 1);
-            messageId = this.nextMessageId.getAndIncrement();
-        }
-        return MqttMessageIdVariableHeader.from(messageId);
+        this.nextMessageId.compareAndSet(0xffff, 1);
+        return MqttMessageIdVariableHeader.from(this.nextMessageId.getAndIncrement());
     }
 
     private Future<Void> createSubscription(String topic, MqttHandler handler, boolean once, MqttQoS qos) {
